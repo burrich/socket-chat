@@ -46,11 +46,23 @@
     socket.emit('chat message', msgData);
   }
 
+  /*
+   * Function displayMsg create and append message element.
+   */
   function displayMsg(data) {
-    const messages = document.querySelector('#messages');
-    const li = document.createElement('li');
-    li.textContent = data.from + ' : ' + data.msg;
+    const spanFrom = document.createElement('span');
+    spanFrom.classList.add('message-from');
+    spanFrom.textContent = data.from + ' : ';
 
+    const spanContent = document.createElement('span');
+    spanContent.classList.add('message-content');
+    spanContent.textContent = data.msg;
+
+    const li = document.createElement('li');
+    li.appendChild(spanFrom);
+    li.appendChild(spanContent);
+
+    const messages = document.querySelector('#messages');
     messages.appendChild(li);
   }
 
