@@ -2,25 +2,31 @@ const express = require('express');
 const app     = express();
 const server  = require('http').Server(app);
 
-// const io   = require('socket.io')(server);
+// const io = require('socket.io')(server);
 // Pass ws engin to fix issue => https://github.com/socketio/socket.io/issues/3179
-const io      = require('socket.io')(server, { wsEngine: 'ws' });
+const io = require('socket.io')(server, { wsEngine: 'ws' });
 
-
-// Server listening
-const port = process.env.PORT || 3000;
-server.listen(port, () => {
-  console.log(`listening on localhost:${port}`);
-});
+const webpack              = require('webpack');
+const webpackConfig        = require('./webpack.config');
+const webpackCompiler      = webpack(webpackConfig);
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
 
 
 // Express app
 
-/*
- * Serve static files
- * By default '/' is mapped to index.html
- */
-app.use(express.static('public')); 
+// Webpack dev server and hot module replacement middlewares
+// TODO: decrease log level
+app.use(webpackDevMiddleware(webpackCompiler, {
+  publicPath: webpackConfig.output.publicPath
+}));
+app.use(webpackHotMiddleware(webpackCompiler));
+
+// Routes
+app.get('/', (req, res) => {
+  // TODO: check path on unix
+  res.sendFile(__dirname + '/dist/index.html');
+});
 
 
 // Socket.io events
@@ -54,4 +60,11 @@ io.on('connection', (socket) => {
       console.log(`user ${username} disconnected`);
     }
   });
+});
+
+
+// Server listening
+const port = process.env.PORT || 3000;
+server.listen(port, () => {
+  console.log(`listening on localhost:${port}`);
 });

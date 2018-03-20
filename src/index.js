@@ -1,5 +1,8 @@
 import io from 'socket.io-client';
 
+import './style.css';
+
+
 // Socket.io init
 const socket = io();
 console.log('socket.io client init');
@@ -12,8 +15,8 @@ const loginForm = document.querySelector('.login-form');
 loginForm.onsubmit = submitLoginForm;
 
 /*
-  * Function submitLoginForm emit user logging and display the chat room.
-  */
+ * Function submitLoginForm emit user logging and display the chat room.
+ */
 function submitLoginForm(e) {
   e.preventDefault();
 
@@ -31,12 +34,12 @@ const roomForm = document.querySelector('.room-form');
 roomForm.onsubmit = submitRoomForm;
 
 /*
-  * Function submitRoomForm process data on message submission.
-  * Display the message and emit it for server broadcast.
-  */
+ * Function submitRoomForm process data on message submission.
+ * Display the message and emit it for server broadcast.
+ */
 function submitRoomForm(e) {
   e.preventDefault();
-
+  
   const msg = document.querySelector('#msg');
   const msgData = {
     msg: msg.value,
@@ -49,8 +52,8 @@ function submitRoomForm(e) {
 }
 
 /*
-  * Function displayMsg create and append message element.
-  */
+ * Function displayMsg create and append message element.
+ */
 function displayMsg(data) {
   const spanFrom = document.createElement('span');
   spanFrom.classList.add('message-from');
@@ -69,8 +72,8 @@ function displayMsg(data) {
 }
 
 /*
-  * Function displayUser add a new logged user to users list.
-  */
+ * Function displayUser add a new logged user to users list.
+ */
 function displayUser(user) {
   const usersElt = document.querySelector('#users ul');
   const li = document.createElement('li');
@@ -124,6 +127,7 @@ socket.on('users list', (users) => {
 });
 
 socket.on('chat message', (data) => {
+  console.log('CHAT MESSAGE');
   if (logged) {
     displayMsg(data);
   }
@@ -135,3 +139,10 @@ socket.on('user disconnected', (anotherUser) => {
     removeUser(anotherUser);
   }
 });
+
+
+// Hot module reload
+// State lost if enable : username undefined and 'chat message' event received
+// if (module.hot) {
+//   module.hot.accept();
+// }
