@@ -1,6 +1,15 @@
 import io from 'socket.io-client';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 import './style.css';
+
+
+// React hello world
+ReactDOM.render(
+  <h1>Hello React JSX !</h1>,
+  document.getElementById('react-root')
+);
 
 
 // Socket.io init
@@ -8,7 +17,7 @@ const socket = io();
 console.log('socket.io client init');
 
 let logged = false;
-let username;
+let username = '';
 
 // Set Login form
 const loginForm = document.querySelector('.login-form');
