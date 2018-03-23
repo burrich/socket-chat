@@ -12,13 +12,13 @@ const webpackCompiler      = webpack(webpackConfig);
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 
-// TODO: fix comments style
-// TODO: server modules (refactoring)
+/**
+ * Express app with middlewares :
+ * - webpack dev server
+ * - hot module replacement
+ * nb : used on front-end only
+ */
 
-// Express app
-
-// Webpack dev server and hot module replacement middlewares
-// TODO: decrease log level
 app.use(webpackDevMiddleware(webpackCompiler, {
   publicPath: webpackConfig.output.publicPath,
   logLevel: 'warn'
@@ -31,14 +31,13 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/dist/index.html');
 });
 
-
-// Socket.io events
+/**
+ * Socket.io events
+ */
 
 let users = new Set(['Chatbot']);
 
 io.on('connection', (socket) => {
-  // socket.broadcast.emit('user connected');
-  // console.log('a user connected');
 
   socket.on('user login', (username) => {
     users.add(username);
@@ -65,8 +64,10 @@ io.on('connection', (socket) => {
   });
 });
 
+/**
+ * Server listening
+ */
 
-// Server listening
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
   console.log(`listening on localhost:${port}`);
