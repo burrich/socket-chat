@@ -1,2 +1,2 @@
 # socket-chat
-A socket.io basic chat with express
+A socket.io basic chat with express and react.

@@ -12,6 +12,8 @@ const webpackCompiler      = webpack(webpackConfig);
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 
+// TODO: fix comments style
+// TODO: server modules (refactoring)
 
 // Express app
 
@@ -31,24 +33,24 @@ app.get('/', (req, res) => {
 
 // Socket.io events
 
-let users = new Set([]);
+let users = new Set(['Chatbot']);
 
 io.on('connection', (socket) => {
   // socket.broadcast.emit('user connected');
   // console.log('a user connected');
 
-  socket.on('user logging', (username) => {
+  socket.on('user login', (username) => {
     users.add(username);
     socket.emit('users list', [...users]);
+    socket.broadcast.emit('user logged', username);
 
     socket.username = username;
-    socket.broadcast.emit('user logged', username);
 
     console.log(`user ${username} logged`);
   });
 
   socket.on('chat message', (data) => {
-    console.log(`message from ${data.from} : ${data.msg}`);
+    console.log(`message from ${data.from} : ${data.content}`);
     socket.broadcast.emit('chat message', data);
   });
 
@@ -56,8 +58,8 @@ io.on('connection', (socket) => {
     const username = socket.username;
     if (username) {
       users.delete(username);
-      socket.broadcast.emit('user disconnected', username);
-      console.log(`user ${username} disconnected`);
+      socket.broadcast.emit('user left', username);
+      console.log(`user ${username} left`);
     }
   });
 });

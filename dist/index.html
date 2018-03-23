@@ -1,33 +1,10 @@
 <!doctype html>
 <html>
 <head>
-  <title>Socket.IO chat</title>
+  <title>Socket chat</title>
 </head>
 <body>  
-  <div class="room">
-    <ul id="messages"></ul>
-
-    <form class="room-form">
-      <input id="msg" autocomplete="off"><button>Send</button>
-    </form>
-
-    <div id="users">
-      <h2>Users list</h2>
-      <ul></ul>
-    </div>
-
-  </div>  
-
-  <div class="login">
-    <div class="login-box">
-      <form class="login-form">
-        <label for="nickname">Your nickname : </label>
-        <input type="text" id="nickname" autofocus>
-      </form>
-    </div>
-
-    <div id="react-root"></div>
-  </div>
+  <div id="react-root"></div>
 
   <script src="bundle.js"></script>
 </body>
