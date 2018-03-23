@@ -20,7 +20,8 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 // Webpack dev server and hot module replacement middlewares
 // TODO: decrease log level
 app.use(webpackDevMiddleware(webpackCompiler, {
-  publicPath: webpackConfig.output.publicPath
+  publicPath: webpackConfig.output.publicPath,
+  logLevel: 'warn'
 }));
 app.use(webpackHotMiddleware(webpackCompiler));
 
