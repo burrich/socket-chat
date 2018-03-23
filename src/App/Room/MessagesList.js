@@ -14,4 +14,4 @@ function MessagesList(props) {
   );
 }
 
-export default hot(module)(MessagesList);
+export default MessagesList;

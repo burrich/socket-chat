@@ -127,4 +127,5 @@ class App extends Component {
   }
 }
 
+// Export App with hot reload
 export default hot(module)(App);

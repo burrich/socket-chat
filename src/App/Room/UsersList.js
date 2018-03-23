@@ -16,4 +16,4 @@ function UsersList(props) {
   );
 }
 
-export default hot(module)(UsersList);
+export default UsersList;

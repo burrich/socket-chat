@@ -47,4 +47,4 @@ class Login extends Component {
   }
 }
 
-export default hot(module)(Login);
+export default Login;

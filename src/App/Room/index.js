@@ -59,4 +59,4 @@ class Room extends Component {
   }
 }
 
-export default hot(module)(Room);
+export default Room;
